@@ -6,6 +6,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
@@ -129,7 +130,20 @@ class User implements AdvancedUserInterface, \Serializable
     ## OBJECT RELATIONSHIP ##
     #########################
 
-    // none.
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="userId")
+     */
+    protected $comments;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Reply", mappedBy="userId")
+     */
+    protected $replies;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Topic", mappedBy="userId")
+     */
+    protected $topics;
 
     #########################
     ##     CONSTRUCTOR     ##
@@ -139,6 +153,9 @@ class User implements AdvancedUserInterface, \Serializable
     {
         $this->isActive = true;
         $this->salt = md5(uniqid(null, true));
+        $this->comments = new ArrayCollection();
+        $this->replies = new ArrayCollection();
+        $this->topics = new ArrayCollection();
     }
 
 
@@ -529,7 +546,103 @@ class User implements AdvancedUserInterface, \Serializable
     ##  OBJECT REL: G & S  ##
     #########################
 
-    // none.
+    /**
+     * Add comments
+     *
+     * @param \Tec\Ayt\CoreBundle\Entity\Comment $comment
+     * @return User
+     */
+    public function addComment(Comment $comment)
+    {
+        $this->comments[] = $comment;
 
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Tec\Ayt\CoreBundle\Entity\Comment $comment
+     */
+    public function removeComment(Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * Add Reply
+     *
+     * @param \Tec\Ayt\CoreBundle\Entity\Reply $reply
+     * @return User
+     */
+    public function addReply(Reply $reply)
+    {
+        $this->replies[] = $reply;
+
+        return $this;
+    }
+
+    /**
+     * Remove Reply
+     *
+     * @param \Tec\Ayt\CoreBundle\Entity\Reply $reply
+     */
+    public function removeReply(Reply $reply)
+    {
+        $this->replies->removeElement($reply);
+    }
+
+    /**
+     * Get Replies
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReplies()
+    {
+        return $this->replies;
+    }
+
+    /**
+     * Add topic
+     *
+     * @param \Tec\Ayt\CoreBundle\Entity\Topic $topic
+     * @return User
+     */
+    public function addTopic(Topic $topic)
+    {
+        $this->replies[] = $topic;
+
+        return $this;
+    }
+
+    /**
+     * Remove topic
+     *
+     * @param \Tec\Ayt\CoreBundle\Entity\Topic $topic
+     */
+    public function removeTopic(Topic $topic)
+    {
+        $this->replies->removeElement($topic);
+    }
+
+    /**
+     * Get topics
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTopics()
+    {
+        return $this->topics;
+    }
 
 }

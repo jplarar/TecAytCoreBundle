@@ -2,6 +2,7 @@
 
 namespace Tec\Ayt\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -89,7 +90,10 @@ class Admin implements AdvancedUserInterface, \Serializable
     ## OBJECT RELATIONSHIP ##
     #########################
 
-    // none.
+    /**
+     * @ORM\OneToMany(targetEntity="ActionLog", mappedBy="adminId")
+     */
+    protected $actionLogs;
 
     #########################
     ##     CONSTRUCTOR     ##
@@ -99,6 +103,7 @@ class Admin implements AdvancedUserInterface, \Serializable
     {
         $this->isActive = true;
         $this->salt = md5(uniqid(null, true));
+        $this->actionLogs = new ArrayCollection();
     }
 
 
@@ -374,7 +379,38 @@ class Admin implements AdvancedUserInterface, \Serializable
     ##  OBJECT REL: G & S  ##
     #########################
 
-    // none.
+    /**
+     * Add actionLog
+     *
+     * @param \Tec\Ayt\CoreBundle\Entity\ActionLog $actionLog
+     * @return User
+     */
+    public function addActionLog(ActionLog $actionLog)
+    {
+        $this->actionLogs[] = $actionLog;
+
+        return $this;
+    }
+
+    /**
+     * Remove actionLog
+     *
+     * @param \Tec\Ayt\CoreBundle\Entity\ActionLog $actionLog
+     */
+    public function removeActionLog(ActionLog $actionLog)
+    {
+        $this->actionLogs->removeElement($actionLog);
+    }
+
+    /**
+     * Get actionLogs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getActionLogs()
+    {
+        return $this->actionLogs;
+    }
 
 
 }

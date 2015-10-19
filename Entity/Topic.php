@@ -4,6 +4,7 @@ namespace Tec\Ayt\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
@@ -46,13 +47,26 @@ class Topic
     ## OBJECT RELATIONSHIP ##
     #########################
 
-    // none.
+    /**
+     * @ORM\OneToMany(targetEntity="Reply", mappedBy="topicId")
+     */
+    protected $replies;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="topics")
+     * @ORM\JoinColumn(name="userId", referencedColumnName="userId", nullable=false)
+     */
+    protected $userId;
 
     #########################
     ##     CONSTRUCTOR     ##
     #########################
 
-    // none.
+    public function __construct()
+    {
+        $this->replies = new ArrayCollection();
+    }
+
 
     #########################
     ##    STATIC METHODS   ##
@@ -122,6 +136,53 @@ class Topic
     ##  OBJECT REL: G & S  ##
     #########################
 
-    // none.
+    /**
+     * Add Reply
+     *
+     * @param \Tec\Ayt\CoreBundle\Entity\Reply $reply
+     * @return Topic
+     */
+    public function addReply(Reply $reply)
+    {
+        $this->replies[] = $reply;
+
+        return $this;
+    }
+
+    /**
+     * Remove Reply
+     *
+     * @param \Tec\Ayt\CoreBundle\Entity\Reply $reply
+     */
+    public function removeReply(Reply $reply)
+    {
+        $this->replies->removeElement($reply);
+    }
+
+    /**
+     * Get Replies
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReplies()
+    {
+        return $this->replies;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param User $userId
+     */
+    public function setUserId(User $userId)
+    {
+        $this->userId = $userId;
+    }
 
 }

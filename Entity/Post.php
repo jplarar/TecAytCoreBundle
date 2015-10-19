@@ -4,6 +4,7 @@ namespace Tec\Ayt\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
@@ -53,13 +54,20 @@ class Post
     ## OBJECT RELATIONSHIP ##
     #########################
 
-    // none.
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="postId")
+     */
+    protected $comments;
+
 
     #########################
     ##     CONSTRUCTOR     ##
     #########################
 
-    //none.
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
 
     #########################
@@ -144,6 +152,37 @@ class Post
     ##  OBJECT REL: G & S  ##
     #########################
 
-    // none.
+    /**
+     * Add comments
+     *
+     * @param \Tec\Ayt\CoreBundle\Entity\Comment $comment
+     * @return Post
+     */
+    public function addComment(Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Tec\Ayt\CoreBundle\Entity\Comment $comment
+     */
+    public function removeComment(Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
 
 }

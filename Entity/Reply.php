@@ -40,7 +40,18 @@ class Reply
     ## OBJECT RELATIONSHIP ##
     #########################
 
-    // none.
+    /**
+     * @ORM\ManyToOne(targetEntity="Topic", inversedBy="replies")
+     * @ORM\JoinColumn(name="topicId", referencedColumnName="topicId", nullable=false)
+     */
+    protected $topicId;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="replies")
+     * @ORM\JoinColumn(name="userId", referencedColumnName="userId", nullable=false)
+     */
+    protected $userId;
+
 
     #########################
     ##     CONSTRUCTOR     ##
@@ -97,6 +108,36 @@ class Reply
     ##  OBJECT REL: G & S  ##
     #########################
 
-    // none.
+    /**
+     * @return Topic
+     */
+    public function getTopicId()
+    {
+        return $this->topicId;
+    }
+
+    /**
+     * @param Topic $topicId
+     */
+    public function setTopicId(Topic $topicId)
+    {
+        $this->topicId = $topicId;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param User $userId
+     */
+    public function setUserId(User $userId)
+    {
+        $this->userId = $userId;
+    }
 
 }

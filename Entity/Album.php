@@ -4,6 +4,7 @@ namespace Tec\Ayt\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
@@ -51,13 +52,20 @@ class Album
     ## OBJECT RELATIONSHIP ##
     #########################
 
-    // none.
+    /**
+     * @ORM\OneToMany(targetEntity="Content", mappedBy="albumId")
+     */
+    protected $contents;
 
     #########################
     ##     CONSTRUCTOR     ##
     #########################
 
-    // none.
+    public function __construct()
+    {
+        $this->contents = new ArrayCollection();
+    }
+
 
     #########################
     ##    STATIC METHODS   ##
@@ -144,6 +152,37 @@ class Album
     ##  OBJECT REL: G & S  ##
     #########################
 
-    // none.
+    /**
+     * Add Content
+     *
+     * @param \Tec\Ayt\CoreBundle\Entity\Content $content
+     * @return Content
+     */
+    public function addContent(Content $content)
+    {
+        $this->contents[] = $content;
+
+        return $this;
+    }
+
+    /**
+     * Remove Content
+     *
+     * @param \Tec\Ayt\CoreBundle\Entity\Content $content
+     */
+    public function removeContents(Content $content)
+    {
+        $this->contents->removeElement($content);
+    }
+
+    /**
+     * Get Contents
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getContents()
+    {
+        return $this->contents;
+    }
 
 }

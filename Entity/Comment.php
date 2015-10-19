@@ -41,7 +41,17 @@ class Comment
     ## OBJECT RELATIONSHIP ##
     #########################
 
-    // none.
+    /**
+     * @ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
+     * @ORM\JoinColumn(name="postId", referencedColumnName="postId", nullable=false)
+     */
+    protected $postId;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
+     * @ORM\JoinColumn(name="userId", referencedColumnName="userId", nullable=false)
+     */
+    protected $userId;
 
     #########################
     ##     CONSTRUCTOR     ##
@@ -99,6 +109,36 @@ class Comment
     ##  OBJECT REL: G & S  ##
     #########################
 
-    // none.
+    /**
+     * @return Post
+     */
+    public function getPostId()
+    {
+        return $this->postId;
+    }
+
+    /**
+     * @param Post $postId
+     */
+    public function setPostId(Post $postId)
+    {
+        $this->postId = $postId;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param User $userId
+     */
+    public function setUserId(User $userId)
+    {
+        $this->userId = $userId;
+    }
 
 }

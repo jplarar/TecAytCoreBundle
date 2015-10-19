@@ -51,7 +51,12 @@ class Content
     ## OBJECT RELATIONSHIP ##
     #########################
 
-    // none.
+    /**
+     * @ORM\ManyToOne(targetEntity="Album", inversedBy="contents")
+     * @ORM\JoinColumn(name="albumId", referencedColumnName="albumId", nullable=false)
+     */
+    protected $albumId;
+
 
     #########################
     ##     CONSTRUCTOR     ##
@@ -145,6 +150,20 @@ class Content
     ##  OBJECT REL: G & S  ##
     #########################
 
-    // none.
+    /**
+     * @return mixed
+     */
+    public function getAlbumId()
+    {
+        return $this->albumId;
+    }
+
+    /**
+     * @param Album $albumId
+     */
+    public function setAlbumId(Album $albumId)
+    {
+        $this->albumId = $albumId;
+    }
 
 }
