@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(title="Topics")
+ * @ORM\Table(name="Topics")
  * @ORM\HasLifecycleCallbacks()
  */
 class Topic
@@ -50,7 +50,7 @@ class Topic
     /**
      * @ORM\OneToMany(targetEntity="Reply", mappedBy="topicId")
      */
-    protected $replies;
+    //protected $replies;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="topics")

@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Admins", indexes={@ORM\Index(name="user_idx", columns={"username"})})
+ * @ORM\Table(name="Admins", indexes={@ORM\Index(name="admin_idx", columns={"username"})})
  * @UniqueEntity("username")
  */
 class Admin implements AdvancedUserInterface, \Serializable
@@ -53,7 +53,7 @@ class Admin implements AdvancedUserInterface, \Serializable
     /**
      * @ORM\Column(type="string", length=60)
      */
-    private $role;
+    private $role = 'ROLE_SUPER_ADMIN';
 
     /**
      * @ORM\Column(type="string")
@@ -61,7 +61,7 @@ class Admin implements AdvancedUserInterface, \Serializable
     private $fullName;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $email;
 
