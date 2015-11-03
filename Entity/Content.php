@@ -4,7 +4,7 @@ namespace Tec\Ayt\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity
@@ -43,9 +43,13 @@ class Content
 
     /**
      * @ORM\Column(type="string", nullable=false)
-     * @Assert\NotBlank()
      */
     protected $fileName;
+
+    /**
+     * @var UploadedFile
+     */
+    protected $file;
 
     #########################
     ## OBJECT RELATIONSHIP ##
@@ -75,7 +79,13 @@ class Content
     ##   SPECIAL METHODS   ##
     #########################
 
-    // none.
+    public function uploadFile($path)
+    {
+        $file = $this->file;
+        $name = sprintf('%s%s%s%s.%s', date('Y'), date('m'), date('d'), uniqid(), $file->getClientOriginalExtension());
+        $file->move($path,$name);
+        $this->fileName = $name;
+    }
 
 
     #########################
@@ -144,6 +154,23 @@ class Content
         $this->fileName = $fileName;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param UploadedFile $file
+     * @return Event
+     */
+    public function setFile(UploadedFile $file)
+    {
+        $this->file = $file;
+        return $this;
+    }
 
 
     #########################

@@ -45,7 +45,7 @@ class Comment
      * @ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
      * @ORM\JoinColumn(name="postId", referencedColumnName="postId", nullable=false)
      */
-    //protected $postId;
+    protected $postId;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")

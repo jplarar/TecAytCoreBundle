@@ -5,6 +5,7 @@ namespace Tec\Ayt\CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 /**
@@ -44,9 +45,13 @@ class Album
 
     /**
      * @ORM\Column(type="string", nullable=false)
-     * @Assert\NotBlank()
      */
-    protected $cover;
+    protected $fileName;
+
+    /**
+     * @var UploadedFile
+     */
+    protected $file;
 
     #########################
     ## OBJECT RELATIONSHIP ##
@@ -78,7 +83,13 @@ class Album
     ##   SPECIAL METHODS   ##
     #########################
 
-    // none.
+    public function uploadFile($path)
+    {
+        $file = $this->file;
+        $name = sprintf('%s%s%s%s.%s', date('Y'), date('m'), date('d'), uniqid(), $file->getClientOriginalExtension());
+        $file->move($path,$name);
+        $this->fileName = $name;
+    }
 
 
     #########################
@@ -134,17 +145,35 @@ class Album
     /**
      * @return mixed
      */
-    public function getCover()
+    public function getFileName()
     {
-        return $this->cover;
+        return $this->fileName;
     }
 
     /**
-     * @param mixed $cover
+     * @param mixed $fileName
      */
-    public function setCover($cover)
+    public function setFileName($fileName)
     {
-        $this->cover = $cover;
+        $this->fileName = $fileName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param UploadedFile $file
+     * @return Event
+     */
+    public function setFile(UploadedFile $file)
+    {
+        $this->file = $file;
+        return $this;
     }
 
 

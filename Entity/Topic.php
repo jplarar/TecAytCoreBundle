@@ -50,7 +50,7 @@ class Topic
     /**
      * @ORM\OneToMany(targetEntity="Reply", mappedBy="topicId")
      */
-    //protected $replies;
+    protected $replies;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="topics")
