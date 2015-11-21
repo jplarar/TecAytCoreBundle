@@ -8,10 +8,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Contents")
- * @ORM\HasLifecycleCallbacks()
+ * @ORM\Table(name="Banners")
  */
-class Content
+class Banner
 {
     #########################
     ##       METADATA      ##
@@ -28,18 +27,13 @@ class Content
      * @ORM\Column(type="integer", unique=TRUE)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $contentId;
+    protected $bannerId;
 
     /**
      * @ORM\Column(type="string", nullable=false)
      * @Assert\NotBlank()
      */
     protected $name;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $description;
 
     /**
      * @ORM\Column(type="string", nullable=false)
@@ -51,20 +45,11 @@ class Content
      */
     protected $file;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $timestamp;
-
     #########################
     ## OBJECT RELATIONSHIP ##
     #########################
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Album", inversedBy="contents")
-     * @ORM\JoinColumn(name="albumId", referencedColumnName="albumId", nullable=false)
-     */
-    protected $albumId;
+    // none.
 
 
     #########################
@@ -98,13 +83,13 @@ class Content
     #########################
 
     /**
-     * Get contentId
+     * Get bannerId
      *
      * @return integer
      */
-    public function getContentId()
+    public function getBannerId()
     {
-        return $this->contentId;
+        return $this->bannerId;
     }
 
     /**
@@ -119,7 +104,7 @@ class Content
     /**
      * Set Name
      * @param string $name
-     * @return Content
+     * @return Banner
      */
     public function setName($name)
     {
@@ -127,21 +112,6 @@ class Content
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param mixed $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
 
     /**
      * @return mixed
@@ -177,59 +147,11 @@ class Content
         return $this;
     }
 
-    /**
-     * Set timestamp
-     *
-     * @param \DateTime $timestamp
-     * @return Content
-     */
-    public function setTimestamp($timestamp)
-    {
-        $this->timestamp = $timestamp;
-
-        return $this;
-    }
-
-    /**
-     * Get timestamp
-     *
-     * @return \DateTime
-     */
-    public function getTimestamp()
-    {
-        return $this->timestamp;
-    }
-
-    /**
-     * Set TimestampValue
-     * @ORM\PrePersist
-     * @return Content
-     */
-    public function setTimestampValue()
-    {
-        $this->timestamp = new \Datetime("now");
-        return $this;
-    }
-
 
     #########################
     ##  OBJECT REL: G & S  ##
     #########################
 
-    /**
-     * @return mixed
-     */
-    public function getAlbumId()
-    {
-        return $this->albumId;
-    }
-
-    /**
-     * @param Album $albumId
-     */
-    public function setAlbumId(Album $albumId)
-    {
-        $this->albumId = $albumId;
-    }
+    // none.
 
 }

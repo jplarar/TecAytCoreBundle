@@ -8,10 +8,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Contents")
- * @ORM\HasLifecycleCallbacks()
+ * @ORM\Table(name="Sponsors")
  */
-class Content
+class Sponsor
 {
     #########################
     ##       METADATA      ##
@@ -28,7 +27,7 @@ class Content
      * @ORM\Column(type="integer", unique=TRUE)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $contentId;
+    protected $sponsorId;
 
     /**
      * @ORM\Column(type="string", nullable=false)
@@ -37,9 +36,10 @@ class Content
     protected $name;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=false)
+     * @Assert\NotBlank()
      */
-    protected $description;
+    protected $url;
 
     /**
      * @ORM\Column(type="string", nullable=false)
@@ -51,20 +51,11 @@ class Content
      */
     protected $file;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $timestamp;
-
     #########################
     ## OBJECT RELATIONSHIP ##
     #########################
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Album", inversedBy="contents")
-     * @ORM\JoinColumn(name="albumId", referencedColumnName="albumId", nullable=false)
-     */
-    protected $albumId;
+    // none.
 
 
     #########################
@@ -98,13 +89,13 @@ class Content
     #########################
 
     /**
-     * Get contentId
+     * Get sponsorId
      *
      * @return integer
      */
-    public function getContentId()
+    public function getSponsorId()
     {
-        return $this->contentId;
+        return $this->sponsorId;
     }
 
     /**
@@ -119,7 +110,7 @@ class Content
     /**
      * Set Name
      * @param string $name
-     * @return Content
+     * @return Sponsor
      */
     public function setName($name)
     {
@@ -127,21 +118,6 @@ class Content
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param mixed $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
 
     /**
      * @return mixed
@@ -178,58 +154,25 @@ class Content
     }
 
     /**
-     * Set timestamp
-     *
-     * @param \DateTime $timestamp
-     * @return Content
+     * @return mixed
      */
-    public function setTimestamp($timestamp)
+    public function getUrl()
     {
-        $this->timestamp = $timestamp;
-
-        return $this;
+        return $this->url;
     }
 
     /**
-     * Get timestamp
-     *
-     * @return \DateTime
+     * @param mixed $url
      */
-    public function getTimestamp()
+    public function setUrl($url)
     {
-        return $this->timestamp;
+        $this->url = $url;
     }
-
-    /**
-     * Set TimestampValue
-     * @ORM\PrePersist
-     * @return Content
-     */
-    public function setTimestampValue()
-    {
-        $this->timestamp = new \Datetime("now");
-        return $this;
-    }
-
 
     #########################
     ##  OBJECT REL: G & S  ##
     #########################
 
-    /**
-     * @return mixed
-     */
-    public function getAlbumId()
-    {
-        return $this->albumId;
-    }
-
-    /**
-     * @param Album $albumId
-     */
-    public function setAlbumId(Album $albumId)
-    {
-        $this->albumId = $albumId;
-    }
+    // none.
 
 }
