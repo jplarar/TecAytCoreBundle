@@ -131,11 +131,6 @@ class User implements AdvancedUserInterface, \Serializable
     #########################
 
     /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="userId")
-     */
-    protected $comments;
-
-    /**
      * @ORM\OneToMany(targetEntity="Reply", mappedBy="userId")
      */
     protected $replies;
@@ -153,7 +148,6 @@ class User implements AdvancedUserInterface, \Serializable
     {
         $this->isActive = true;
         $this->salt = md5(uniqid(null, true));
-        $this->comments = new ArrayCollection();
         $this->replies = new ArrayCollection();
         $this->topics = new ArrayCollection();
     }
@@ -545,39 +539,6 @@ class User implements AdvancedUserInterface, \Serializable
     #########################
     ##  OBJECT REL: G & S  ##
     #########################
-
-    /**
-     * Add comments
-     *
-     * @param \Tec\Ayt\CoreBundle\Entity\Comment $comment
-     * @return User
-     */
-    public function addComment(Comment $comment)
-    {
-        $this->comments[] = $comment;
-
-        return $this;
-    }
-
-    /**
-     * Remove comments
-     *
-     * @param \Tec\Ayt\CoreBundle\Entity\Comment $comment
-     */
-    public function removeComment(Comment $comment)
-    {
-        $this->comments->removeElement($comment);
-    }
-
-    /**
-     * Get comments
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getComments()
-    {
-        return $this->comments;
-    }
 
     /**
      * Add Reply
