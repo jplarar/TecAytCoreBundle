@@ -62,7 +62,7 @@ class Content
 
     /**
      * @ORM\ManyToOne(targetEntity="Album", inversedBy="contents")
-     * @ORM\JoinColumn(name="albumId", referencedColumnName="albumId", nullable=false)
+     * @ORM\JoinColumn(name="albumId", referencedColumnName="albumId", nullable=false, onDelete="CASCADE")
      */
     protected $albumId;
 

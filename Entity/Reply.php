@@ -47,7 +47,7 @@ class Reply
 
     /**
      * @ORM\ManyToOne(targetEntity="Topic", inversedBy="replies")
-     * @ORM\JoinColumn(name="topicId", referencedColumnName="topicId", nullable=false)
+     * @ORM\JoinColumn(name="topicId", referencedColumnName="topicId", nullable=false, onDelete="CASCADE")
      */
     protected $topicId;
 
