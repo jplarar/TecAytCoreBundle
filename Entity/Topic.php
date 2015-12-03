@@ -43,6 +43,11 @@ class Topic
      */
     protected $content;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $timestamp;
+
     #########################
     ## OBJECT RELATIONSHIP ##
     #########################
@@ -72,15 +77,25 @@ class Topic
     ##    STATIC METHODS   ##
     #########################
 
-    // none.
+    //none.
 
 
     #########################
     ##   SPECIAL METHODS   ##
     #########################
 
-    // none.
+    /**
+     * @ORM\PrePersist
+     */
+    public function setTimestampValue()
+    {
+        $this->timestamp = new \Datetime("now");;
+    }
 
+    public function getRepliesCount()
+    {
+        return $this->replies->count();
+    }
 
     #########################
     ## GETTERS AND SETTERS ##
@@ -131,6 +146,24 @@ class Topic
     {
         $this->content = $content;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTimestamp()
+    {
+        return $this->timestamp;
+    }
+
+    /**
+     * @param mixed $timestamp
+     */
+    public function setTimestamp($timestamp)
+    {
+        $this->timestamp = $timestamp;
+    }
+
+
 
     #########################
     ##  OBJECT REL: G & S  ##

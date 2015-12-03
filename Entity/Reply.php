@@ -36,6 +36,11 @@ class Reply
      */
     protected $content;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $timestamp;
+
     #########################
     ## OBJECT RELATIONSHIP ##
     #########################
@@ -70,7 +75,13 @@ class Reply
     ##   SPECIAL METHODS   ##
     #########################
 
-    // none.
+    /**
+     * @ORM\PrePersist
+     */
+    public function setTimestampValue()
+    {
+        $this->timestamp = new \Datetime("now");;
+    }
 
 
     #########################
@@ -102,6 +113,23 @@ class Reply
     {
         $this->content = $content;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTimestamp()
+    {
+        return $this->timestamp;
+    }
+
+    /**
+     * @param mixed $timestamp
+     */
+    public function setTimestamp($timestamp)
+    {
+        $this->timestamp = $timestamp;
+    }
+
 
 
     #########################
